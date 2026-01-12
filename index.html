@@ -1,329 +1,111 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manuel Castellanos - Enterprise AI & Cloud Architect</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
-
-  <!-- Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            navy: {
-              950: '#001a33', // Deepest navy
-              900: '#002855', // Tec Blue Dark
-              800: '#003366',
-              700: '#004E89', // Tec Blue Light
-              600: '#1A5490',
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manuel Castellanos | Enterprise AI & Cloud Architect</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+              mono: ['Space Grotesk', 'monospace'],
+              tech: ['Share Tech Mono', 'monospace'],
             },
-            cyan: {
-              400: '#0DD6E8',
-              500: '#00A3E0', // Cyan accent
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-20px)' },
+            colors: {
+              navy: {
+                950: '#001020',
+                900: '#001a33', // Primary Background
+                800: '#00264d',
+                700: '#003366',
+              },
+              cyan: {
+                400: '#0DD6E8', // Electric Cyan
+                500: '#00B8D4',
+              }
             },
-            'pulse-glow': {
-              '0%, 100%': { opacity: 1 },
-              '50%': { opacity: .5 },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'scan': 'scan 4s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              scan: {
+                '0%': { backgroundPosition: '0% 0%' },
+                '100%': { backgroundPosition: '0% 100%' },
+              }
             }
           }
         }
       }
-    }
-  </script>
-
-  <style>
-    body {
-      background-color: #001a33;
-      color: #ffffff;
-      overflow-x: hidden;
-    }
-
-    /* Glassmorphism */
-    .glass {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .glass:hover {
-      background: rgba(255, 255, 255, 0.08);
-      /* Brighter on hover */
-      border-color: rgba(13, 214, 232, 0.3);
-      box-shadow: 0 0 20px rgba(13, 214, 232, 0.15);
-    }
-
-    /* Gradient Text */
-    .text-gradient {
-      background: linear-gradient(to right, #ffffff, #0DD6E8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .text-gradient-blue {
-      background: linear-gradient(to right, #0DD6E8, #004E89);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Background Grid Animation */
-    .bg-grid {
-      background-size: 50px 50px;
-      background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #001a33;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #004E89;
-      border-radius: 5px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #0DD6E8;
-    }
-  </style>
+    </script>
+    <style>
+      body {
+        background-color: #001a33;
+        color: #ffffff;
+        overflow-x: hidden;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #001a33;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #003366;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #0DD6E8;
+      }
+      
+      .scanlines {
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0) 50%,
+          rgba(0,0,0,0.2) 50%,
+          rgba(0,0,0,0.2)
+        );
+        background-size: 100% 4px;
+        animation: scan 4s linear infinite;
+        pointer-events: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom": "https://esm.sh/react-dom@18.2.0?external=react",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+    "framer-motion": "https://esm.sh/framer-motion@11.0.8?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.344.0?external=react",
+    "three": "https://esm.sh/three@0.150.1",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.15.16?external=react,react-dom,three",
+    "@react-three/drei": "https://esm.sh/@react-three/drei@9.99.0?external=react,react-dom,three,@react-three/fiber"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-
-<body class="antialiased selection:bg-cyan-500/30">
-
-  <!-- Navbar -->
-  <nav class="fixed top-0 w-full z-50 glass border-b-0 border-white/5 bg-navy-950/80 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <div class="text-xl font-bold tracking-tight">
-        MC<span class="text-cyan-400">.</span>
-      </div>
-      <a href="mailto:manuelceomx@gmail.com"
-        class="px-6 py-2 bg-gradient-to-r from-cyan-500 to-navy-600 rounded-full font-medium hover:shadow-lg hover:shadow-cyan-500/20 transition-all transform hover:scale-105 text-sm">
-        Contactar Ahora
-      </a>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-    <!-- Background Elements -->
-    <div class="absolute inset-0 bg-grid"></div>
-    <div class="absolute top-20 left-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] animate-pulse-glow"></div>
-    <div class="absolute bottom-20 right-10 w-96 h-96 bg-navy-600/20 rounded-full blur-[100px] animate-pulse-glow"
-      style="animation-delay: 1s;"></div>
-
-    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
-      <div
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-cyan-500/30 text-cyan-400 text-sm font-medium mb-8 animate-float">
-        <i data-lucide="sparkles" class="w-4 h-4"></i>
-        <span>Enterprise AI & Cloud Architect</span>
-      </div>
-
-      <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight">
-        Manuel <br>
-        <span class="text-gradient-blue">Castellanos</span>
-      </h1>
-
-      <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-        Transformando corporativos con arquitecturas cloud escalables,
-        <span class="text-cyan-400">IA conversacional</span> y soluciones enterprise de última generación.
-      </p>
-
-      <div class="flex flex-wrap justify-center gap-6">
-        <!-- Tech Badges -->
-        <div class="flex items-center gap-2 px-4 py-2 glass rounded-lg text-sm text-gray-300">
-          <i data-lucide="brain" class="w-4 h-4 text-cyan-400"></i> AI Agents
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 glass rounded-lg text-sm text-gray-300">
-          <i data-lucide="cloud" class="w-4 h-4 text-blue-400"></i> Multi-Cloud
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 glass rounded-lg text-sm text-gray-300">
-          <i data-lucide="code" class="w-4 h-4 text-purple-400"></i> Full Stack
-        </div>
-        <div class="flex items-center gap-2 px-4 py-2 glass rounded-lg text-sm text-gray-300">
-          <i data-lucide="globe" class="w-4 h-4 text-green-400"></i> Scalability
-        </div>
-      </div>
-    </div>
-
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
-      <i data-lucide="chevron-down" class="w-8 h-8"></i>
-    </div>
-  </section>
-
-  <!-- Expertise Section -->
-  <section class="py-32 relative bg-navy-950">
-    <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-4xl md:text-5xl font-bold mb-20 text-center">
-        Dominio <span class="text-gradient-blue">Tecnológico</span>
-      </h2>
-
-      <!-- Grid -->
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Card 1: AI -->
-        <div class="glass p-8 rounded-2xl group transition-all duration-300">
-          <div
-            class="w-14 h-14 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <i data-lucide="bot" class="w-8 h-8 text-cyan-400"></i>
-          </div>
-          <h3 class="text-2xl font-bold mb-4">IA & Conversational</h3>
-          <p class="text-gray-400 mb-6 text-sm leading-relaxed">
-            Desarrollo de agentes telefónicos con <strong class="text-white">ElevenLabs</strong>, clonación de voz, y
-            modelos LLM (Gemini Pro, GPT-4o, Claude) para automatización empresarial.
-          </p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">NLP</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">Voice AI</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">LLMs</span>
-          </div>
-        </div>
-
-        <!-- Card 2: Cloud -->
-        <div class="glass p-8 rounded-2xl group transition-all duration-300">
-          <div
-            class="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <i data-lucide="network" class="w-8 h-8 text-blue-400"></i>
-          </div>
-          <h3 class="text-2xl font-bold mb-4">Cloud Architecture</h3>
-          <p class="text-gray-400 mb-6 text-sm leading-relaxed">
-            Arquitecturas agnósticas en <strong class="text-white">GCP, Azure y Cloudflare</strong>. Especialista en
-            Azure Cognitive Services (Traducción, Reconocimiento de voz).
-          </p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">Serverless</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">Edge Computing</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">Microservices</span>
-          </div>
-        </div>
-
-        <!-- Card 3: Dev -->
-        <div class="glass p-8 rounded-2xl group transition-all duration-300">
-          <div
-            class="w-14 h-14 bg-gradient-to-br from-purple-500/20 to-pink-600/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <i data-lucide="code-2" class="w-8 h-8 text-purple-400"></i>
-          </div>
-          <h3 class="text-2xl font-bold mb-4">Full Stack Enterprise</h3>
-          <p class="text-gray-400 mb-6 text-sm leading-relaxed">
-            Stack moderno con <strong class="text-white">React, Next.js, TypeScript</strong> y Node.js. Bases de datos
-            SQL (MariaDB, PostgreSQL) optimizadas para alto rendimiento.
-          </p>
-          <div class="flex flex-wrap gap-2">
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">React</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">Node.js</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10">TypeScript</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stack Section -->
-  <section class="py-20 border-y border-white/5 bg-navy-900/50">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <h4 class="text-lg text-gray-400 mb-12 uppercase tracking-widest font-semibold">Tecnologías Principales</h4>
-      <div
-        class="flex flex-wrap justify-center items-center gap-12 grayscale hover:grayscale-0 transition-all duration-500 opacity-70 hover:opacity-100">
-        <!-- Using Text for stack to keep it clean and fail-safe without external SVGs -->
-        <span class="text-2xl font-bold flex items-center gap-2"><i data-lucide="triangle" class="fill-current"></i>
-          Next.js</span>
-        <span class="text-2xl font-bold flex items-center gap-2"><i data-lucide="atom" class="fill-current"></i>
-          React</span>
-        <span class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-code" class="fill-current"></i>
-          TypeScript</span>
-        <span class="text-2xl font-bold flex items-center gap-2"><i data-lucide="server" class="fill-current"></i>
-          Node.js</span>
-        <span class="text-2xl font-bold flex items-center gap-2"><i data-lucide="database" class="fill-current"></i>
-          MariaDB</span>
-        <span class="text-2xl font-bold flex items-center gap-2"><i data-lucide="cloud-lightning"
-            class="fill-current"></i> Azure</span>
-        <span class="text-2xl font-bold flex items-center gap-2"><i data-lucide="container" class="fill-current"></i>
-          GCP</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="py-32 relative">
-    <div class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-navy-900 to-transparent pointer-events-none">
-    </div>
-
-    <div class="max-w-4xl mx-auto px-6 relative z-10">
-      <div
-        class="glass rounded-3xl p-12 text-center border-t border-cyan-500/30 shadow-[0_0_50px_rgba(13,214,232,0.1)]">
-        <h2 class="text-5xl font-bold mb-6">Hablemos de negocios</h2>
-        <p class="text-xl text-gray-400 mb-10">
-          ¿Listo para implementar soluciones de IA que realmente escalen?
-        </p>
-
-        <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
-          <a href="mailto:manuelceomx@gmail.com"
-            class="group flex items-center justify-center gap-3 px-8 py-4 bg-white text-navy-950 rounded-xl font-bold hover:bg-cyan-400 transition-all">
-            <i data-lucide="mail"></i>
-            <span>manuelceomx@gmail.com</span>
-          </a>
-          <a href="https://t.me/manuelceo" target="_blank"
-            class="group flex items-center justify-center gap-3 px-8 py-4 bg-navy-800 text-white border border-white/10 rounded-xl font-bold hover:bg-navy-700 transition-all">
-            <i data-lucide="send"></i>
-            <span>Telegram: @manuelceo</span>
-          </a>
-        </div>
-
-        <div class="flex justify-center gap-8 text-gray-400">
-          <a href="https://www.linkedin.com/in/manuelceomx" target="_blank" class="hover:text-white transition-colors">
-            <i data-lucide="linkedin" class="w-6 h-6"></i>
-          </a>
-          <a href="https://github.com/ideaspuff" target="_blank" class="hover:text-white transition-colors">
-            <i data-lucide="github" class="w-6 h-6"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="py-8 text-center text-sm text-gray-600 border-t border-white/5">
-    <p>&copy; 2026 Manuel Castellanos. Enterprise AI & Cloud Architect.</p>
-  </footer>
-
-  <!-- Initialize Icons -->
-  <script>
-    lucide.createIcons();
-  </script>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
-
 </html>
