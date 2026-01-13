@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from "@vercel/analytics/react"
 import { NeuralCanvas } from './components/ui/NeuralCanvas';
 import { Hero } from './components/Hero';
 import { Expertise } from './components/Expertise';
@@ -11,7 +12,7 @@ import { Globe } from 'lucide-react';
 
 const LanguageToggle = () => {
   const { language, toggleLanguage } = useLanguage();
-  
+
   return (
     <motion.button
       initial={{ opacity: 0, y: -20 }}
@@ -24,7 +25,7 @@ const LanguageToggle = () => {
       <Globe size={16} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
       <div className="relative w-6 h-5 overflow-hidden">
         <AnimatePresence mode="wait">
-          <motion.span 
+          <motion.span
             key={language}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -53,13 +54,13 @@ const Footer = () => {
 const AppContent: React.FC = () => {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-navy-900 font-sans selection:bg-cyan-400/30 selection:text-cyan-100">
-      
+
       {/* Background: Synaptic Network */}
       <NeuralCanvas />
-      
+
       {/* Language Toggle Fixed */}
       <LanguageToggle />
-      
+
       {/* Main Content */}
       <main className="relative z-10 flex flex-col items-center">
         <Hero />
@@ -78,6 +79,7 @@ const App: React.FC = () => {
   return (
     <LanguageProvider>
       <AppContent />
+      <Analytics />
     </LanguageProvider>
   );
 };
