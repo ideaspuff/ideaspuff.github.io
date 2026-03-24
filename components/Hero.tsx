@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Terminal, ArrowRight } from 'lucide-react';
+import { Linkedin, Github, Terminal, ArrowRight, Youtube } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export const Hero: React.FC = () => {
@@ -106,8 +106,10 @@ export const Hero: React.FC = () => {
         transition={{ duration: 0.8, delay: 0.8 }}
         className="flex flex-col md:flex-row items-center gap-6"
       >
-        <a 
-          href="mailto:manuelceomx@gmail.com"
+        <a
+          href="https://wa.me/5215569111742"
+          target="_blank"
+          rel="noreferrer"
           className="group relative px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 overflow-hidden bg-cyan-500 text-navy-900 shadow-[0_0_20px_rgba(13,214,232,0.4)] hover:shadow-[0_0_30px_rgba(13,214,232,0.6)] hover:scale-105"
         >
           <span className="relative z-10 flex items-center gap-2">
@@ -122,6 +124,9 @@ export const Hero: React.FC = () => {
           </a>
           <a href="https://github.com/ideaspuff" target="_blank" rel="noreferrer" className="p-3 rounded-full transition-all hover:scale-110 bg-white/5 border border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(13,214,232,0.2)]">
             <Github size={24} />
+          </a>
+          <a href="https://youtube.com/c/manuelceo" target="_blank" rel="noreferrer" className="p-3 rounded-full transition-all hover:scale-110 bg-white/5 border border-white/10 text-slate-300 hover:text-red-400 hover:border-red-400/50 hover:shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+            <Youtube size={24} />
           </a>
         </div>
       </motion.div>
