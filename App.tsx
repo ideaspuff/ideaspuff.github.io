@@ -8,7 +8,7 @@ import { TechStack } from './components/TechStack';
 import { Contact } from './components/Contact';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe } from 'lucide-react';
+import { Globe, Briefcase, Code2 } from 'lucide-react';
 
 const LanguageToggle = () => {
   const { language, toggleLanguage } = useLanguage();
@@ -41,6 +41,53 @@ const LanguageToggle = () => {
   );
 };
 
+const ViewModeToggle = () => {
+  const { viewMode, toggleViewMode } = useLanguage();
+  const isBusiness = viewMode === 'business';
+
+  return (
+    <motion.button
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={toggleViewMode}
+      className="fixed top-6 right-[5.5rem] z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 hover:border-cyan-400/50 hover:bg-white/10 transition-all shadow-[0_0_15px_rgba(0,0,0,0.3)] group"
+    >
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={viewMode}
+          initial={{ rotate: -90, opacity: 0 }}
+          animate={{ rotate: 0, opacity: 1 }}
+          exit={{ rotate: 90, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {isBusiness ? (
+            <Code2 size={16} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
+          ) : (
+            <Briefcase size={16} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
+          )}
+        </motion.div>
+      </AnimatePresence>
+      <div className="relative w-12 h-5 overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={viewMode}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 font-mono font-bold text-xs text-slate-200 group-hover:text-cyan-300 flex items-center"
+          >
+            {isBusiness ? 'TECH' : 'BIZ'}
+          </motion.span>
+        </AnimatePresence>
+      </div>
+    </motion.button>
+  );
+};
+
 const Footer = () => {
   const { t } = useLanguage();
   return (
@@ -58,7 +105,8 @@ const AppContent: React.FC = () => {
       {/* Background: Synaptic Network */}
       <NeuralCanvas />
 
-      {/* Language Toggle Fixed */}
+      {/* Toggle Controls Fixed */}
+      <ViewModeToggle />
       <LanguageToggle />
 
       {/* Main Content */}
