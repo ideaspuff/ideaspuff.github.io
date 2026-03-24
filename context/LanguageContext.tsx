@@ -12,7 +12,10 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('es');
+  const [language, setLanguage] = useState<Language>(() => {
+    const browserLang = typeof navigator !== 'undefined' ? navigator.language : 'es';
+    return browserLang.startsWith('es') ? 'es' : 'en';
+  });
   const [viewMode, setViewMode] = useState<ViewMode>('business');
 
   const toggleLanguage = () => {

@@ -1,14 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Database, 
-  Smartphone, 
-  Globe, 
-  ShieldCheck, 
-  Layers, 
-  Lock, 
+import {
+  Database,
+  Smartphone,
+  Globe,
+  ShieldCheck,
+  Layers,
+  Lock,
   Workflow,
-  Brain
+  Brain,
+  Plug
 } from 'lucide-react';
 import { GlassCard } from './ui/GlassCard';
 import { useLanguage } from '../context/LanguageContext';
@@ -178,7 +179,7 @@ export const TechnicalEcosystem: React.FC = () => {
         </motion.div>
 
         {/* Card 6: AI Engineering (Square) */}
-        <motion.div 
+        <motion.div
           className="md:col-span-1 md:row-span-1 h-full"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -202,7 +203,33 @@ export const TechnicalEcosystem: React.FC = () => {
             </div>
           </GlassCard>
         </motion.div>
-        
+
+        {/* Card 7: API Integration (Square) */}
+        <motion.div
+          className="md:col-span-1 md:row-span-1 h-full"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.7 }}
+        >
+          <GlassCard className="h-full p-8 flex flex-col group hover:bg-white/[0.08]">
+            <div className="mb-auto">
+              <div className="mb-4 inline-flex p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                <Plug size={28} />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{t.ecosystem.cards.api.title}</h3>
+              <p className="text-slate-400 text-sm mb-4">
+                {t.ecosystem.cards.api.description}
+              </p>
+            </div>
+             <div className="flex gap-2 mt-4 flex-wrap">
+              {t.ecosystem.cards.api.tags.map(tag => (
+                <span key={tag} className="px-2 py-1 text-xs rounded border border-amber-500/30 text-amber-300 bg-amber-500/10">{tag}</span>
+              ))}
+            </div>
+          </GlassCard>
+        </motion.div>
+
       </div>
     </section>
   );

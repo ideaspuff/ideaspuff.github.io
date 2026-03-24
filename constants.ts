@@ -92,6 +92,11 @@ export const content = {
             title: 'AI Engineering',
             description: 'Deep ML integration. LLM fine-tuning, LangChain chains, and model deployment.',
             tags: ['Python', 'TensorFlow']
+          },
+          api: {
+            title: 'API Engineering',
+            description: 'RESTful & GraphQL APIs, webhook orchestration, and microservices communication layers.',
+            tags: ['REST', 'GraphQL', 'Webhooks']
           }
         }
       },
@@ -107,7 +112,8 @@ export const content = {
       },
       footer: {
         role: 'Enterprise AI & Cloud Architecture',
-        rights: 'All rights reserved.'
+        rights: 'All rights reserved.',
+        extra: 'Also available for talks & corporate training.'
       }
     },
     business: {
@@ -167,12 +173,12 @@ export const content = {
         description: 'A comprehensive set of capabilities designed to solve real business challenges, from data management to customer-facing experiences.',
         cards: {
           database: {
-            title: 'Data Management',
-            description: 'Secure, organized, and always available. Your business data stored with enterprise-grade reliability and instant access.',
+            title: 'Enterprise Data Systems',
+            description: 'Mission-critical databases designed for high availability, real-time analytics, and the reliability your business demands.',
             items: [
-              'Structured data for reports and analytics',
-              'Real-time databases for live dashboards',
-              'Flexible storage for any type of content'
+              'Structured data for executive reports and BI',
+              'Real-time databases powering live dashboards',
+              'Scalable storage that grows with your business'
             ]
           },
           web: {
@@ -199,6 +205,11 @@ export const content = {
             title: 'AI Integration',
             description: 'Custom AI models trained on your business data. Smarter recommendations, predictions, and automated decisions.',
             tags: ['Predictions', 'Insights']
+          },
+          api: {
+            title: 'Connect Your Systems',
+            description: 'Seamlessly integrate your existing tools — ERPs, CRMs, payment platforms — through custom APIs that make everything work together.',
+            tags: ['Integrations', 'Automation', 'Sync']
           }
         }
       },
@@ -214,7 +225,8 @@ export const content = {
       },
       footer: {
         role: 'AI & Digital Transformation Strategy',
-        rights: 'All rights reserved.'
+        rights: 'All rights reserved.',
+        extra: 'Also available for talks & corporate training.'
       }
     }
   },
@@ -308,6 +320,11 @@ export const content = {
             title: 'Ingeniería de IA',
             description: 'Integración profunda de ML. Fine-tuning de LLMs, cadenas LangChain y despliegue de modelos.',
             tags: ['Python', 'TensorFlow']
+          },
+          api: {
+            title: 'Ingeniería de APIs',
+            description: 'APIs RESTful y GraphQL, orquestación de webhooks y capas de comunicación entre microservicios.',
+            tags: ['REST', 'GraphQL', 'Webhooks']
           }
         }
       },
@@ -323,7 +340,8 @@ export const content = {
       },
       footer: {
         role: 'Enterprise AI & Cloud Architecture',
-        rights: 'Todos los derechos reservados.'
+        rights: 'Todos los derechos reservados.',
+        extra: 'También disponible para conferencias y capacitación corporativa.'
       }
     },
     business: {
@@ -383,12 +401,12 @@ export const content = {
         description: 'Un conjunto integral de capacidades diseñadas para resolver desafíos reales de negocio, desde la gestión de datos hasta la experiencia del cliente.',
         cards: {
           database: {
-            title: 'Gestión de Datos',
-            description: 'Seguros, organizados y siempre disponibles. Tus datos de negocio almacenados con confiabilidad empresarial y acceso instantáneo.',
+            title: 'Bases de Datos Empresariales',
+            description: 'Bases de datos de misión crítica con alta disponibilidad, analítica en tiempo real y la confiabilidad que tu negocio exige.',
             items: [
-              'Datos estructurados para reportes y analítica',
+              'Datos estructurados para reportes ejecutivos y BI',
               'Bases de datos en tiempo real para dashboards',
-              'Almacenamiento flexible para cualquier contenido'
+              'Almacenamiento escalable que crece con tu negocio'
             ]
           },
           web: {
@@ -415,6 +433,11 @@ export const content = {
             title: 'Integración de IA',
             description: 'Modelos de IA entrenados con los datos de tu negocio. Recomendaciones más inteligentes, predicciones y decisiones automatizadas.',
             tags: ['Predicciones', 'Insights']
+          },
+          api: {
+            title: 'Conecta Tus Sistemas',
+            description: 'Integra tus herramientas existentes — ERPs, CRMs, plataformas de pago — con APIs a la medida que hacen que todo funcione en armonía.',
+            tags: ['Integraciones', 'Automatización', 'Sync']
           }
         }
       },
@@ -430,7 +453,8 @@ export const content = {
       },
       footer: {
         role: 'Estrategia de IA y Transformación Digital',
-        rights: 'Todos los derechos reservados.'
+        rights: 'Todos los derechos reservados.',
+        extra: 'También disponible para conferencias y capacitación corporativa.'
       }
     }
   }

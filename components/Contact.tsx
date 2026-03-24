@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Send, ArrowUpRight } from 'lucide-react';
+import { Mail, Send, ArrowUpRight, MessageCircle } from 'lucide-react';
 import { GlassCard } from './ui/GlassCard';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -41,7 +41,7 @@ export const Contact: React.FC = () => {
               </a>
 
               {/* Telegram Button */}
-              <a 
+              <a
                 href={`https://t.me/${t.contact.telegramBtn.replace('@', '')}`}
                 target="_blank"
                 rel="noreferrer"
@@ -49,6 +49,18 @@ export const Contact: React.FC = () => {
               >
                 <Send className="w-5 h-5" />
                 <span>{t.contact.telegramBtn}</span>
+                <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+              </a>
+
+              {/* WhatsApp Button */}
+              <a
+                href="https://wa.me/5215569111742"
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex items-center justify-center gap-3 px-8 py-4 bg-green-600/20 border border-green-500/50 text-green-100 rounded-xl font-bold text-lg hover:bg-green-600/30 hover:border-green-400 transition-all duration-300"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>WhatsApp</span>
                 <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
               </a>
             </div>

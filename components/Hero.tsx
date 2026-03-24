@@ -117,10 +117,10 @@ export const Hero: React.FC = () => {
         </a>
 
         <div className="flex items-center gap-4">
-          <a href="#" className="p-3 rounded-full transition-all hover:scale-110 bg-white/5 border border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(13,214,232,0.2)]">
+          <a href="https://linkedin.com/in/manuelceomx" target="_blank" rel="noreferrer" className="p-3 rounded-full transition-all hover:scale-110 bg-white/5 border border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(13,214,232,0.2)]">
             <Linkedin size={24} />
           </a>
-          <a href="#" className="p-3 rounded-full transition-all hover:scale-110 bg-white/5 border border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(13,214,232,0.2)]">
+          <a href="https://github.com/ideaspuff" target="_blank" rel="noreferrer" className="p-3 rounded-full transition-all hover:scale-110 bg-white/5 border border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(13,214,232,0.2)]">
             <Github size={24} />
           </a>
         </div>
