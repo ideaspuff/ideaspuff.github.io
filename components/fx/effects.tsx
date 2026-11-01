@@ -13,6 +13,16 @@ import Lenis from 'lenis';
 import { prefersReducedMotion } from '../../context/IntroContext';
 
 /* ------------------------------------------------------------------ */
+/* Shared reveal trigger                                               */
+/* ------------------------------------------------------------------ */
+/** Fire reveals slightly BEFORE the element enters the screen (positive bottom margin)
+ *  so on phones the animation is already running when the content arrives. */
+export const REVEAL_VIEWPORT = { once: true, margin: '0px 0px 18% 0px' } as const;
+
+/** Stagger only where items sit side by side; on a single mobile column it just adds lag. */
+export const isNarrow = () => typeof window !== 'undefined' && window.innerWidth < 768;
+
+/* ------------------------------------------------------------------ */
 /* Smooth scroll (Lenis)                                               */
 /* ------------------------------------------------------------------ */
 export const useSmoothScroll = () => {
@@ -338,14 +348,14 @@ export const SectionLabel: React.FC<{ index: string; label: string; className?: 
     className={`flex items-center gap-4 font-tech text-xs md:text-sm tracking-[0.3em] uppercase text-cyan-400/80 ${className ?? ''}`}
     initial="hidden"
     whileInView="show"
-    viewport={{ once: true, margin: '-120px' }}
+    viewport={REVEAL_VIEWPORT}
   >
     <span>{index}</span>
     <motion.span
       className="h-px w-16 bg-cyan-400/60 origin-left"
-      variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } } }}
+      variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } } }}
     />
-    <motion.span variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0, transition: { delay: 0.4, duration: 0.8 } } }}>
+    <motion.span variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0, transition: { delay: 0.25, duration: 0.7 } } }}>
       {label}
     </motion.span>
   </motion.div>

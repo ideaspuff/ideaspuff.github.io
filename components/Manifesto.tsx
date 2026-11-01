@@ -7,7 +7,7 @@ export const Manifesto: React.FC = () => {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
   // Words light up one by one while the section travels through the viewport
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.4'] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.95', 'end 0.6'] });
 
   return (
     <section ref={ref} id="manifesto" className="relative w-full px-6 md:px-12 py-40 md:py-64 min-h-[110vh] flex items-center">

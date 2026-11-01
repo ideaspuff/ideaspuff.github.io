@@ -2,16 +2,16 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Mail, Send, ArrowUpRight, MessageCircle, Linkedin, Github, Youtube } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { Magnetic, SectionLabel } from './fx/effects';
+import { Magnetic, SectionLabel, REVEAL_VIEWPORT, isNarrow } from './fx/effects';
 
 export const Contact: React.FC = () => {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
   // The giant word zooms and un-tracks into place as the section arrives
-  const scale = useTransform(scrollYProgress, [0, 0.85], [0.55, 1]);
-  const spacing = useTransform(scrollYProgress, [0, 0.85], ['0.4em', '-0.04em']);
-  const opacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.55], [0.55, 1]);
+  const spacing = useTransform(scrollYProgress, [0, 0.55], ['0.4em', '-0.04em']);
+  const opacity = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
   const ringRotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
 
   // Fit the headline to the viewport whatever its length (HABLEMOS vs LET'S TALK)
@@ -48,8 +48,8 @@ export const Contact: React.FC = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.1, delay: 0.2 }}
+          viewport={REVEAL_VIEWPORT}
+          transition={{ duration: 1.0, delay: 0.1 }}
           className="mt-12 text-center text-lg md:text-2xl text-slate-300 max-w-2xl mx-auto font-light"
         >
           {t.contact.description}
@@ -64,8 +64,8 @@ export const Contact: React.FC = () => {
               rel="noreferrer"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+              viewport={REVEAL_VIEWPORT}
+              transition={{ delay: isNarrow() ? 0 : i * 0.12, duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
               className="group relative flex items-center justify-between gap-4 py-8 md:py-12 md:px-8 border-b md:border-b-0 md:border-r last:border-r-0 border-white/10 overflow-hidden"
             >
               <span className="absolute inset-0 bg-cyan-400 origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />

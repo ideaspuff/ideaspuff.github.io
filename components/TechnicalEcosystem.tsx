@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
 import { Database, Smartphone, Globe, ShieldCheck, Workflow, Brain, Plug } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { SectionLabel } from './fx/effects';
+import { SectionLabel, REVEAL_VIEWPORT, isNarrow } from './fx/effects';
 
 /** Card with a cursor-following spotlight, glowing border and subtle 3D tilt. */
 const SpotlightCard: React.FC<{
@@ -24,8 +24,8 @@ const SpotlightCard: React.FC<{
       ref={ref}
       initial={{ opacity: 0, y: 80, rotateX: 18, clipPath: 'inset(30% 0% 0% 0% round 28px)' }}
       whileInView={{ opacity: 1, y: 0, rotateX: 0, clipPath: 'inset(0% 0% 0% 0% round 28px)' }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.18 }}
+      viewport={REVEAL_VIEWPORT}
+      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: isNarrow() ? 0 : (index % 3) * 0.15 }}
       style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
@@ -89,8 +89,8 @@ export const TechnicalEcosystem: React.FC = () => {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.3 }}
+            viewport={REVEAL_VIEWPORT}
+            transition={{ duration: 1.0, delay: 0.15 }}
             className="text-slate-400 text-lg md:text-xl leading-relaxed"
           >
             {t.ecosystem.description}

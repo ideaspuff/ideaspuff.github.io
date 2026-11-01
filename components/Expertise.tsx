@@ -87,7 +87,7 @@ export const Expertise: React.FC = () => {
   }, []);
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
-  const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 28, mass: 0.5 });
+  const smooth = useSpring(scrollYProgress, { stiffness: 160, damping: 32, mass: 0.35 });
   const x = useTransform(smooth, [0, 1], [0, -distance]);
   const barScale = useTransform(smooth, [0, 1], [0, 1]);
 

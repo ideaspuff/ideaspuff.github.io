@@ -78,7 +78,7 @@ const vertexShader = /* glsl */ `
     vColor = mix(cyan, blue, aSeed);
     vColor = mix(vColor, violet, smoothstep(1.2, 2.0, uMorph) * aSeed);
     vColor += force * 0.9;
-    vAlpha = (0.35 + 0.65 * aSeed) * (0.25 + 0.75 * t) * uDim;
+    vAlpha = (0.35 + 0.65 * aSeed) * (0.25 + 0.75 * t) * uDim * 0.9;
   }
 `;
 
