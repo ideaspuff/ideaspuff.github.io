@@ -1,134 +1,111 @@
 import React from 'react';
-import { Analytics } from "@vercel/analytics/react"
-import { NeuralCanvas } from './components/ui/NeuralCanvas';
+import { Analytics } from '@vercel/analytics/react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Globe, Briefcase, Code2 } from 'lucide-react';
+import { ParticleField } from './components/ui/ParticleField';
 import { Hero } from './components/Hero';
+import { Manifesto } from './components/Manifesto';
 import { Expertise } from './components/Expertise';
 import { TechnicalEcosystem } from './components/TechnicalEcosystem';
 import { TechStack } from './components/TechStack';
 import { Contact } from './components/Contact';
+import { Preloader } from './components/fx/Preloader';
+import { Cursor, Grain, ScrollProgress, useSmoothScroll } from './components/fx/effects';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, Briefcase, Code2 } from 'lucide-react';
+import { IntroProvider, useIntro } from './context/IntroContext';
 
-const ToggleControls = () => {
-  const { language, viewMode, toggleLanguage, toggleViewMode } = useLanguage();
+const TopBar = () => {
+  const { language, viewMode, toggleLanguage, toggleViewMode, t } = useLanguage();
+  const { introDone } = useIntro();
   const isBusiness = viewMode === 'business';
 
   const modeLabel = isBusiness
-    ? (language === 'es' ? 'Modo Negocios' : 'Business Mode')
-    : (language === 'es' ? 'Modo Tech' : 'Tech Mode');
+    ? language === 'es' ? 'Modo Negocios' : 'Business Mode'
+    : language === 'es' ? 'Modo Tech' : 'Tech Mode';
+
+  const links = [
+    { href: '#expertise', label: t.sections.expertise },
+    { href: '#ecosystem', label: t.sections.ecosystem },
+    { href: '#contact', label: t.sections.contact },
+  ];
+
+  const pill =
+    'flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 hover:border-cyan-400/60 hover:bg-white/10 transition-colors';
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="fixed top-6 right-6 z-50 flex items-center gap-3"
+    <motion.header
+      initial={{ opacity: 0, y: -30 }}
+      animate={introDone ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed top-0 inset-x-0 z-50 px-5 md:px-12 py-5 flex items-center justify-between"
     >
-      {/* View Mode Toggle */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={toggleViewMode}
-        className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 hover:border-cyan-400/50 hover:bg-white/10 transition-all shadow-[0_0_15px_rgba(0,0,0,0.3)] group"
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={viewMode}
-            initial={{ rotate: -90, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            exit={{ rotate: 90, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {isBusiness ? (
-              <Briefcase size={16} className="text-cyan-400 transition-colors" />
-            ) : (
-              <Code2 size={16} className="text-cyan-400 transition-colors" />
-            )}
-          </motion.div>
-        </AnimatePresence>
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={viewMode + language}
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -10, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="font-mono font-bold text-xs text-slate-200 group-hover:text-cyan-300 whitespace-nowrap"
-          >
-            {modeLabel}
-          </motion.span>
-        </AnimatePresence>
-      </motion.button>
+      <a href="#top" className="font-sans font-extrabold text-xl tracking-tight text-white" aria-label="Inicio">
+        MC<span className="text-cyan-400">.</span>
+      </a>
 
-      {/* Language Toggle */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={toggleLanguage}
-        className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 hover:border-cyan-400/50 hover:bg-white/10 transition-all shadow-[0_0_15px_rgba(0,0,0,0.3)] group"
-      >
-        <Globe size={16} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
-        <div className="relative w-6 h-5 overflow-hidden">
+      <nav className="hidden lg:flex items-center gap-8 font-tech text-xs tracking-[0.25em] uppercase text-slate-400">
+        {links.map((l) => (
+          <a key={l.href} href={l.href} className="relative group hover:text-white transition-colors">
+            {l.label}
+            <span className="absolute -bottom-1 left-0 h-px w-full bg-cyan-400 origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 transition-transform duration-500" />
+          </a>
+        ))}
+      </nav>
+
+      <div className="flex items-center gap-2 md:gap-3">
+        <button onClick={toggleViewMode} className={pill}>
           <AnimatePresence mode="wait">
             <motion.span
-              key={language}
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
+              key={viewMode}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="absolute inset-0 font-mono font-bold text-sm text-slate-200 group-hover:text-cyan-300"
             >
-              {language === 'en' ? 'ES' : 'EN'}
+              {isBusiness ? <Briefcase size={15} className="text-cyan-400" /> : <Code2 size={15} className="text-cyan-400" />}
             </motion.span>
           </AnimatePresence>
-        </div>
-      </motion.button>
-    </motion.div>
-  );
-};
-
-const Footer = () => {
-  const { t } = useLanguage();
-  return (
-    <footer className="relative z-10 w-full py-8 text-center text-slate-500 text-sm border-t border-white/5 backdrop-blur-sm mb-0">
-      <p>© {new Date().getFullYear()} Manuel Castellanos. {t.footer.rights}</p>
-      <p className="mt-1 text-xs">{t.footer.role}</p>
-      <p className="mt-2 text-xs text-slate-600">{t.footer.extra}</p>
-    </footer>
+          <span className="font-mono font-bold text-xs text-slate-200 whitespace-nowrap">{modeLabel}</span>
+        </button>
+        <button onClick={toggleLanguage} className={pill}>
+          <Globe size={15} className="text-slate-400" />
+          <span className="font-mono font-bold text-xs text-slate-200">{language === 'en' ? 'ES' : 'EN'}</span>
+        </button>
+      </div>
+    </motion.header>
   );
 };
 
 const AppContent: React.FC = () => {
+  useSmoothScroll();
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-navy-900 font-sans selection:bg-cyan-400/30 selection:text-cyan-100">
+    <div className="relative min-h-screen w-full overflow-x-clip bg-navy-950 font-sans text-white selection:bg-cyan-400 selection:text-navy-950">
+      <ParticleField />
+      <Preloader />
+      <ScrollProgress />
+      <TopBar />
+      <Cursor />
+      <Grain />
 
-      {/* Background: Synaptic Network */}
-      <NeuralCanvas />
-
-      {/* Toggle Controls Fixed */}
-      <ToggleControls />
-
-      {/* Main Content */}
-      <main className="relative z-10 flex flex-col items-center">
+      <main className="relative z-10">
         <Hero />
+        <Manifesto />
         <Expertise />
         <TechnicalEcosystem />
         <TechStack />
         <Contact />
       </main>
-
-      <Footer />
     </div>
   );
-}
+};
 
-const App: React.FC = () => {
-  return (
-    <LanguageProvider>
+const App: React.FC = () => (
+  <LanguageProvider>
+    <IntroProvider>
       <AppContent />
       <Analytics />
-    </LanguageProvider>
-  );
-};
+    </IntroProvider>
+  </LanguageProvider>
+);
 
 export default App;

@@ -1,132 +1,126 @@
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
-import { Bot, Cloud, Code2, Sparkles, Server, Zap } from 'lucide-react';
-import { GlassCard } from './ui/GlassCard';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { motion, useScroll, useSpring, useTransform, MotionValue } from 'framer-motion';
+import { Bot, Cloud, Code2, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { SectionLabel } from './fx/effects';
+
+type CardKey = 'ai' | 'cloud' | 'dev';
+
+const CARDS: { key: CardKey; Icon: typeof Bot; accent: string; glow: string; stroke: string }[] = [
+  { key: 'ai', Icon: Bot, accent: 'text-cyan-400', glow: 'from-cyan-500/30', stroke: 'rgba(13,214,232,0.55)' },
+  { key: 'cloud', Icon: Cloud, accent: 'text-blue-400', glow: 'from-blue-500/30', stroke: 'rgba(96,165,250,0.55)' },
+  { key: 'dev', Icon: Code2, accent: 'text-violet-400', glow: 'from-violet-500/30', stroke: 'rgba(167,139,250,0.55)' },
+];
+
+const Panel: React.FC<{
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+  card: (typeof CARDS)[number];
+}> = ({ index, total, progress, card }) => {
+  const { t } = useLanguage();
+  const data = t.expertise.cards[card.key];
+  // Each panel's number drifts against the scroll for parallax depth
+  const seg = 1 / total;
+  const numX = useTransform(progress, [seg * index - seg, seg * index + seg], ['30%', '-30%']);
+  const rotate = useTransform(progress, [seg * index - seg, seg * index, seg * index + seg], [6, 0, -6]);
+
+  return (
+    <motion.article
+      style={{ rotate }}
+      className="group relative shrink-0 w-[86vw] md:w-[58vw] lg:w-[46vw] h-[68vh] md:h-[70vh] rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.01] backdrop-blur-xl overflow-hidden p-7 md:p-12 flex flex-col"
+    >
+      <div className={`absolute -top-1/3 -right-1/4 w-[80%] h-[80%] rounded-full bg-gradient-to-br ${card.glow} to-transparent blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700`} />
+
+      <motion.span
+        style={{ x: numX, WebkitTextStroke: `2px ${card.stroke}` }}
+        className="absolute -bottom-[6vh] right-0 font-sans font-extrabold text-transparent leading-none text-[38vw] md:text-[22vw] select-none pointer-events-none"
+      >
+        {String(index + 1).padStart(2, '0')}
+      </motion.span>
+
+      <div className="relative z-10 flex items-start justify-between">
+        <div className={`grid place-items-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 ${card.accent}`}>
+          <card.Icon size={30} />
+        </div>
+        <ArrowUpRight className={`${card.accent} opacity-40 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500`} size={32} />
+      </div>
+
+      <h3 className="relative z-10 mt-auto md:mt-14 text-3xl md:text-5xl font-bold text-white leading-tight max-w-[14ch]">{data.title}</h3>
+
+      <ul className="relative z-10 mt-6 md:mt-10 space-y-3 md:space-y-4 max-w-md">
+        {data.items.map((txt, i) => (
+          <li key={i} className="flex items-baseline gap-4 text-slate-300 text-base md:text-lg border-b border-white/5 pb-3">
+            <span className={`font-tech text-xs ${card.accent}`}>{`0${i + 1}`}</span>
+            {txt}
+          </li>
+        ))}
+      </ul>
+
+      <p className={`relative z-10 mt-6 md:mt-auto font-tech text-xs tracking-[0.3em] uppercase ${card.accent}`}>{data.focus}</p>
+    </motion.article>
+  );
+};
 
 export const Expertise: React.FC = () => {
   const { t } = useLanguage();
-  
-  const container: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [distance, setDistance] = useState(0);
 
-  const item: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50 } }
-  };
+  useLayoutEffect(() => {
+    const measure = () => {
+      if (!trackRef.current) return;
+      setDistance(Math.max(0, trackRef.current.scrollWidth - window.innerWidth));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (trackRef.current) ro.observe(trackRef.current);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
+
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
+  const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.4 });
+  const x = useTransform(smooth, [0, 1], [0, -distance]);
+  const barScale = useTransform(smooth, [0, 1], [0, 1]);
 
   return (
-    <section className="w-full max-w-7xl px-4 py-24 mx-auto perspective-1000">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="mb-20 text-center"
-      >
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-          {t.expertise.title} <span className="text-cyan-400">{t.expertise.titleHighlight}</span>
-        </h2>
-        <p className="max-w-2xl mx-auto text-slate-400 text-lg">
-          {t.expertise.description}
-        </p>
-      </motion.div>
+    <section
+      ref={sectionRef}
+      id="expertise"
+      className="relative w-full"
+      // Vertical runway for the horizontal travel
+      style={{ height: `calc(100vh + ${distance}px)` }}
+    >
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
+        <motion.div ref={trackRef} style={{ x }} className="flex items-center gap-6 md:gap-10 pl-5 md:pl-12 pr-[10vw] will-change-transform">
+          {/* Intro panel */}
+          <div className="shrink-0 w-[86vw] md:w-[38vw] pr-4">
+            <SectionLabel index="01" label={t.sections.expertise} className="mb-8" />
+            <h2 className="font-sans font-extrabold uppercase text-white leading-[0.9] tracking-tight text-[13vw] md:text-[6.5vw]">
+              {t.expertise.title}
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-400">
+                {t.expertise.titleHighlight}
+              </span>
+            </h2>
+            <p className="mt-8 text-slate-400 text-lg max-w-md">{t.expertise.description}</p>
+          </div>
 
-      <motion.div 
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-50px" }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-8"
-      >
-        {/* Card 1: IA & Conversational */}
-        <motion.div variants={item} className="h-full">
-          <GlassCard className="h-full group p-8" enableTilt={true}>
-            <div className="flex flex-col h-full">
-              <div className="mb-8 p-4 rounded-2xl w-fit border bg-cyan-500/10 border-cyan-500/20 group-hover:border-cyan-400/50 transition-colors shadow-[0_0_15px_rgba(13,214,232,0.1)]">
-                <Bot size={32} className="text-cyan-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-cyan-400 transition-colors">
-                {t.expertise.cards.ai.title}
-              </h3>
-              <ul className="space-y-4 mb-8 flex-grow">
-                {t.expertise.cards.ai.items.map((txt, i) => (
-                  <li key={i} className="flex items-start gap-3 text-slate-300">
-                    <Sparkles size={18} className="mt-0.5 shrink-0 text-cyan-500" />
-                    <span className="leading-tight">{txt}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="pt-6 border-t border-white/10 mt-auto">
-                <p className="text-xs text-cyan-300 font-mono tracking-widest uppercase opacity-80 group-hover:opacity-100 transition-opacity">
-                  {t.expertise.cards.ai.focus}
-                </p>
-              </div>
-            </div>
-          </GlassCard>
+          {CARDS.map((card, i) => (
+            <Panel key={card.key} index={i} total={CARDS.length} progress={smooth} card={card} />
+          ))}
         </motion.div>
 
-        {/* Card 2: Cloud Architecture */}
-        <motion.div variants={item} className="h-full">
-          <GlassCard className="h-full group p-8" enableTilt={true}>
-            <div className="flex flex-col h-full">
-              <div className="mb-8 p-4 rounded-2xl w-fit border bg-blue-500/10 border-blue-500/20 group-hover:border-blue-400/50 transition-colors shadow-[0_0_15px_rgba(59,130,246,0.1)]">
-                <Cloud size={32} className="text-blue-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-blue-400 transition-colors">
-                {t.expertise.cards.cloud.title}
-              </h3>
-              <ul className="space-y-4 mb-8 flex-grow">
-                 {t.expertise.cards.cloud.items.map((txt, i) => (
-                  <li key={i} className="flex items-start gap-3 text-slate-300">
-                    <Server size={18} className="mt-0.5 shrink-0 text-blue-500" />
-                    <span className="leading-tight">{txt}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="pt-6 border-t border-white/10 mt-auto">
-                <p className="text-xs text-blue-300 font-mono tracking-widest uppercase opacity-80 group-hover:opacity-100 transition-opacity">
-                   {t.expertise.cards.cloud.focus}
-                </p>
-              </div>
-            </div>
-          </GlassCard>
-        </motion.div>
-
-        {/* Card 3: Full Stack Enterprise */}
-        <motion.div variants={item} className="h-full">
-          <GlassCard className="h-full group p-8" enableTilt={true}>
-            <div className="flex flex-col h-full">
-               <div className="mb-8 p-4 rounded-2xl w-fit border bg-purple-500/10 border-purple-500/20 group-hover:border-purple-400/50 transition-colors shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-                <Code2 size={32} className="text-purple-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-6 group-hover:text-purple-400 transition-colors">
-                 {t.expertise.cards.dev.title}
-              </h3>
-              <ul className="space-y-4 mb-8 flex-grow">
-                 {t.expertise.cards.dev.items.map((txt, i) => (
-                  <li key={i} className="flex items-start gap-3 text-slate-300">
-                    <Zap size={18} className="mt-0.5 shrink-0 text-purple-500" />
-                    <span className="leading-tight">{txt}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="pt-6 border-t border-white/10 mt-auto">
-                <p className="text-xs text-purple-300 font-mono tracking-widest uppercase opacity-80 group-hover:opacity-100 transition-opacity">
-                   {t.expertise.cards.dev.focus}
-                </p>
-              </div>
-            </div>
-          </GlassCard>
-        </motion.div>
-
-      </motion.div>
+        {/* Progress rail */}
+        <div className="absolute bottom-8 left-5 right-5 md:left-12 md:right-12 h-px bg-white/10">
+          <motion.div style={{ scaleX: barScale }} className="h-full origin-left bg-cyan-400" />
+        </div>
+      </div>
     </section>
   );
 };

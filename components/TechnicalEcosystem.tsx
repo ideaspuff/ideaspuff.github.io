@@ -1,235 +1,171 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import {
-  Database,
-  Smartphone,
-  Globe,
-  ShieldCheck,
-  Layers,
-  Lock,
-  Workflow,
-  Brain,
-  Plug
-} from 'lucide-react';
-import { GlassCard } from './ui/GlassCard';
+import React, { useRef } from 'react';
+import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import { Database, Smartphone, Globe, ShieldCheck, Workflow, Brain, Plug } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { SectionLabel } from './fx/effects';
+
+/** Card with a cursor-following spotlight, glowing border and subtle 3D tilt. */
+const SpotlightCard: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  color?: string;
+  index: number;
+}> = ({ children, className = '', color = '13,214,232', index }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const mx = useMotionValue(-500);
+  const my = useMotionValue(-500);
+  const rx = useSpring(0, { stiffness: 150, damping: 18 });
+  const ry = useSpring(0, { stiffness: 150, damping: 18 });
+  const bg = useMotionTemplate`radial-gradient(520px circle at ${mx}px ${my}px, rgba(${color},0.16), transparent 45%)`;
+  const border = useMotionTemplate`radial-gradient(320px circle at ${mx}px ${my}px, rgba(${color},0.9), transparent 45%)`;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 80, rotateX: 18, clipPath: 'inset(30% 0% 0% 0% round 28px)' }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0, clipPath: 'inset(0% 0% 0% 0% round 28px)' }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.12 }}
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
+      onMouseMove={(e) => {
+        const r = ref.current!.getBoundingClientRect();
+        mx.set(e.clientX - r.left);
+        my.set(e.clientY - r.top);
+        ry.set(((e.clientX - r.left) / r.width - 0.5) * 8);
+        rx.set(-((e.clientY - r.top) / r.height - 0.5) * 8);
+      }}
+      onMouseLeave={() => {
+        mx.set(-500);
+        my.set(-500);
+        rx.set(0);
+        ry.set(0);
+      }}
+      className={`group relative rounded-[28px] p-px ${className}`}
+    >
+      {/* Glowing border layer */}
+      <motion.div className="absolute inset-0 rounded-[28px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: border }} />
+      <div className="absolute inset-0 rounded-[28px] border border-white/10" />
+      <div className="relative h-full rounded-[27px] bg-[#000e1f]/85 backdrop-blur-xl overflow-hidden p-7 md:p-9">
+        <motion.div className="absolute inset-0 pointer-events-none" style={{ background: bg }} />
+        <div className="relative z-10 h-full flex flex-col">{children}</div>
+      </div>
+    </motion.div>
+  );
+};
+
+const Tag: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span className="px-3 py-1 rounded-full text-[11px] md:text-xs font-tech tracking-wider uppercase border border-white/10 bg-white/5 text-slate-300">
+    {children}
+  </span>
+);
+
+const IconBox: React.FC<{ Icon: typeof Database; className: string }> = ({ Icon, className }) => (
+  <div className={`grid place-items-center w-14 h-14 rounded-2xl border mb-6 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 ${className}`}>
+    <Icon size={26} />
+  </div>
+);
 
 export const TechnicalEcosystem: React.FC = () => {
   const { t } = useLanguage();
+  const c = t.ecosystem.cards;
+  const headRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: headRef, offset: ['start end', 'end start'] });
+  const titleX = useTransform(scrollYProgress, [0, 1], ['8%', '-8%']);
 
   return (
-    <section className="w-full max-w-7xl px-4 py-24 mx-auto">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mb-16"
-      >
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-          {t.ecosystem.title} <span className="text-cyan-400">{t.ecosystem.titleHighlight}</span>
-        </h2>
-        <p className="max-w-2xl text-slate-400 text-lg">
-          {t.ecosystem.description}
-        </p>
-      </motion.div>
+    <section id="ecosystem" className="relative w-full px-5 md:px-12 py-32 md:py-44">
+      <div className="max-w-[1400px] mx-auto">
+        <div ref={headRef} className="mb-16 md:mb-24 grid md:grid-cols-[1.2fr_1fr] gap-10 items-end">
+          <div>
+            <SectionLabel index="02" label={t.sections.ecosystem} className="mb-8" />
+            <motion.h2
+              style={{ x: titleX }}
+              className="font-sans font-extrabold uppercase text-white leading-[0.9] tracking-tight text-[12vw] md:text-[6vw]"
+            >
+              {t.ecosystem.title}{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500">{t.ecosystem.titleHighlight}</span>
+            </motion.h2>
+          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+            className="text-slate-400 text-lg md:text-xl leading-relaxed"
+          >
+            {t.ecosystem.description}
+          </motion.p>
+        </div>
 
-      {/* Bento Grid Layout - Increased minimum height to 290px for larger cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(290px,auto)]">
-        
-        {/* Card 1: Database Architecture (Tall Vertical) */}
-        <motion.div 
-          className="md:col-span-1 md:row-span-2 h-full"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-        >
-          <GlassCard className="h-full p-8 flex flex-col justify-between group overflow-hidden bg-gradient-to-b from-white/5 to-transparent">
-            <div>
-              <div className="mb-6 inline-flex p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 group-hover:scale-110 transition-transform duration-300">
-                <Database size={32} />
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-5 auto-rows-[minmax(260px,auto)]">
+          <SpotlightCard index={0} color="251,146,60" className="md:col-span-2 md:row-span-2">
+            <IconBox Icon={Database} className="bg-orange-500/10 border-orange-500/30 text-orange-400" />
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{c.database.title}</h3>
+            <p className="text-slate-400 leading-relaxed mb-8">{c.database.description}</p>
+            <ul className="mt-auto space-y-3">
+              {c.database.items.map((it, i) => (
+                <li key={i} className="flex items-center gap-3 text-sm text-slate-300">
+                  <span className="w-6 h-px bg-orange-400" />
+                  {it}
+                </li>
+              ))}
+            </ul>
+          </SpotlightCard>
+
+          <SpotlightCard index={1} className="md:col-span-4">
+            <div className="flex flex-col md:flex-row md:items-center gap-8 h-full">
+              <div className="flex-1">
+                <span className="inline-block mb-5 px-3 py-1 rounded-full text-xs font-tech tracking-widest uppercase bg-cyan-400/10 border border-cyan-400/30 text-cyan-300">
+                  {c.web.badge}
+                </span>
+                <h3 className="text-2xl md:text-4xl font-bold text-white mb-4">{c.web.title}</h3>
+                <p className="text-slate-400 leading-relaxed max-w-xl">{c.web.description}</p>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">{t.ecosystem.cards.database.title}</h3>
-              <p className="text-slate-400 mb-6 leading-relaxed">
-                {t.ecosystem.cards.database.description}
-              </p>
-              <ul className="space-y-3">
-                {t.ecosystem.cards.database.items.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-slate-300 border-l-2 border-orange-500/30 pl-3">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* Visual Decoration */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-orange-500/10 rounded-full blur-3xl group-hover:bg-orange-500/20 transition-all duration-500" />
-          </GlassCard>
-        </motion.div>
-
-        {/* Card 2: High-Scale Web (Wide Horizontal) */}
-        <motion.div 
-          className="md:col-span-2 md:row-span-1 h-full"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
-          <GlassCard className="h-full p-8 relative group overflow-hidden">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-              <div className="max-w-lg">
-                <div className="mb-4 inline-flex items-center gap-2 text-cyan-400">
-                   <Globe size={20} />
-                   <span className="text-sm font-mono uppercase tracking-wider">{t.ecosystem.cards.web.badge}</span>
+              <div className="relative w-36 h-36 md:w-44 md:h-44 shrink-0 mx-auto">
+                <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-[spin_18s_linear_infinite]" />
+                <div className="absolute inset-4 rounded-full border border-dashed border-cyan-400/30 animate-[spin_12s_linear_infinite_reverse]" />
+                <div className="absolute inset-0 grid place-items-center text-cyan-300">
+                  <Globe size={56} strokeWidth={1.2} />
                 </div>
-                <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">
-                  {t.ecosystem.cards.web.title}
-                </h3>
-                <p className="text-slate-400">
-                  {t.ecosystem.cards.web.description}
-                </p>
-              </div>
-              
-              {/* Animated Icon Representation */}
-              <div className="hidden md:flex items-center justify-center w-32 h-32 rounded-full bg-cyan-900/30 border border-cyan-500/20 shadow-[0_0_30px_rgba(13,214,232,0.1)] group-hover:shadow-[0_0_50px_rgba(13,214,232,0.2)] transition-all">
-                <Layers size={48} className="text-cyan-400" />
               </div>
             </div>
-            
-            {/* Background Grid Decoration */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(13,214,232,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(13,214,232,0.03)_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:linear-gradient(to_right,transparent,black_40%,transparent)]" />
-          </GlassCard>
-        </motion.div>
+          </SpotlightCard>
 
-        {/* Card 3: Mobile & Cross-Platform (Square) */}
-        <motion.div 
-          className="md:col-span-1 md:row-span-1 h-full"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
-          <GlassCard className="h-full p-8 flex flex-col group hover:bg-white/[0.08]">
-            <div className="mb-auto">
-              <div className="mb-4 inline-flex p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400">
-                <Smartphone size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">{t.ecosystem.cards.mobile.title}</h3>
-              <p className="text-slate-400 text-sm mb-4">
-                {t.ecosystem.cards.mobile.description}
-              </p>
-            </div>
-            <div className="flex gap-2 mt-4">
-              {t.ecosystem.cards.mobile.tags.map(tag => (
-                <span key={tag} className="px-2 py-1 text-xs rounded border border-purple-500/30 text-purple-300 bg-purple-500/10">{tag}</span>
-              ))}
-            </div>
-          </GlassCard>
-        </motion.div>
+          <SpotlightCard index={2} color="96,165,250" className="md:col-span-2">
+            <IconBox Icon={Smartphone} className="bg-blue-500/10 border-blue-500/30 text-blue-400" />
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{c.mobile.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">{c.mobile.description}</p>
+            <div className="mt-auto flex gap-2 flex-wrap">{c.mobile.tags.map((x) => <Tag key={x}>{x}</Tag>)}</div>
+          </SpotlightCard>
 
-        {/* Card 4: Security & Compliance (Square) */}
-        <motion.div 
-          className="md:col-span-1 md:row-span-1 h-full"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-           <GlassCard className="h-full p-8 flex flex-col group hover:bg-white/[0.08]">
-            <div className="mb-auto">
-              <div className="mb-4 inline-flex p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                <ShieldCheck size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">{t.ecosystem.cards.security.title}</h3>
-              <p className="text-slate-400 text-sm mb-4">
-                {t.ecosystem.cards.security.description}
-              </p>
-            </div>
-             <div className="flex gap-2 mt-4">
-              <Lock size={16} className="text-emerald-500" />
-              <span className="text-xs text-emerald-300 font-mono">{t.ecosystem.cards.security.tag}</span>
-            </div>
-          </GlassCard>
-        </motion.div>
+          <SpotlightCard index={3} color="52,211,153" className="md:col-span-2">
+            <IconBox Icon={ShieldCheck} className="bg-emerald-500/10 border-emerald-500/30 text-emerald-400" />
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{c.security.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">{c.security.description}</p>
+            <div className="mt-auto"><Tag>{c.security.tag}</Tag></div>
+          </SpotlightCard>
 
-        {/* Card 5: DevOps & CI/CD (Square) */}
-        <motion.div 
-          className="md:col-span-1 md:row-span-1 h-full"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-        >
-          <GlassCard className="h-full p-8 flex flex-col group hover:bg-white/[0.08]">
-            <div className="mb-auto">
-              <div className="mb-4 inline-flex p-3 rounded-xl bg-pink-500/10 border border-pink-500/20 text-pink-400">
-                <Workflow size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">{t.ecosystem.cards.devops.title}</h3>
-              <p className="text-slate-400 text-sm mb-4">
-                {t.ecosystem.cards.devops.description}
-              </p>
-            </div>
-             <div className="flex gap-2 mt-4 flex-wrap">
-              {t.ecosystem.cards.devops.tags.map(tag => (
-                <span key={tag} className="px-2 py-1 text-xs rounded border border-pink-500/30 text-pink-300 bg-pink-500/10">{tag}</span>
-              ))}
-            </div>
-          </GlassCard>
-        </motion.div>
+          <SpotlightCard index={4} color="167,139,250" className="md:col-span-2">
+            <IconBox Icon={Workflow} className="bg-violet-500/10 border-violet-500/30 text-violet-400" />
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{c.devops.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">{c.devops.description}</p>
+            <div className="mt-auto flex gap-2 flex-wrap">{c.devops.tags.map((x) => <Tag key={x}>{x}</Tag>)}</div>
+          </SpotlightCard>
 
-        {/* Card 6: AI Engineering (Square) */}
-        <motion.div
-          className="md:col-span-1 md:row-span-1 h-full"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-        >
-          <GlassCard className="h-full p-8 flex flex-col group hover:bg-white/[0.08]">
-            <div className="mb-auto">
-              <div className="mb-4 inline-flex p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
-                <Brain size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">{t.ecosystem.cards.aiEng.title}</h3>
-              <p className="text-slate-400 text-sm mb-4">
-                {t.ecosystem.cards.aiEng.description}
-              </p>
-            </div>
-             <div className="flex gap-2 mt-4 flex-wrap">
-              {t.ecosystem.cards.aiEng.tags.map(tag => (
-                <span key={tag} className="px-2 py-1 text-xs rounded border border-indigo-500/30 text-indigo-300 bg-indigo-500/10">{tag}</span>
-              ))}
-            </div>
-          </GlassCard>
-        </motion.div>
+          <SpotlightCard index={5} color="244,114,182" className="md:col-span-2">
+            <IconBox Icon={Brain} className="bg-pink-500/10 border-pink-500/30 text-pink-400" />
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{c.aiEng.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">{c.aiEng.description}</p>
+            <div className="mt-auto flex gap-2 flex-wrap">{c.aiEng.tags.map((x) => <Tag key={x}>{x}</Tag>)}</div>
+          </SpotlightCard>
 
-        {/* Card 7: API Integration (Square) */}
-        <motion.div
-          className="md:col-span-1 md:row-span-1 h-full"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.7 }}
-        >
-          <GlassCard className="h-full p-8 flex flex-col group hover:bg-white/[0.08]">
-            <div className="mb-auto">
-              <div className="mb-4 inline-flex p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
-                <Plug size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">{t.ecosystem.cards.api.title}</h3>
-              <p className="text-slate-400 text-sm mb-4">
-                {t.ecosystem.cards.api.description}
-              </p>
-            </div>
-             <div className="flex gap-2 mt-4 flex-wrap">
-              {t.ecosystem.cards.api.tags.map(tag => (
-                <span key={tag} className="px-2 py-1 text-xs rounded border border-amber-500/30 text-amber-300 bg-amber-500/10">{tag}</span>
-              ))}
-            </div>
-          </GlassCard>
-        </motion.div>
-
+          <SpotlightCard index={6} color="250,204,21" className="md:col-span-2">
+            <IconBox Icon={Plug} className="bg-yellow-500/10 border-yellow-500/30 text-yellow-400" />
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">{c.api.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">{c.api.description}</p>
+            <div className="mt-auto flex gap-2 flex-wrap">{c.api.tags.map((x) => <Tag key={x}>{x}</Tag>)}</div>
+          </SpotlightCard>
+        </div>
       </div>
     </section>
   );

@@ -7,6 +7,16 @@ export const content = {
       nav: {
         toggle: 'ES'
       },
+      intro: {
+        lines: ['> booting neural_core', '> linking cloud regions', '> deploying agents', '> system online'],
+        skip: 'click to skip'
+      },
+      sections: { manifesto: 'Manifesto', expertise: 'Expertise', ecosystem: 'Ecosystem', stack: 'Stack', contact: 'Contact' },
+      manifesto: 'I architect systems that *don\'t break.* AI that *talks like a human,* cloud that *scales on its own,* and code built to last — from the data layer to the last pixel.',
+      hud: {
+        scroll: 'Scroll to explore',
+        localTime: 'Local time'
+      },
       hero: {
         badge: 'ENTERPRISE AI & CLOUD ARCHITECT',
         phrases: [
@@ -108,7 +118,8 @@ export const content = {
         titleHighlight: 'Business',
         description: 'Ready to implement AI solutions that truly scale? Let\'s take your infrastructure to the next level.',
         emailBtn: 'manuelceomx@gmail.com',
-        telegramBtn: '@manuelceomx'
+        telegramBtn: '@manuelceomx',
+        big: 'LET\'S TALK'
       },
       footer: {
         role: 'Enterprise AI & Cloud Architecture',
@@ -119,6 +130,16 @@ export const content = {
     business: {
       nav: {
         toggle: 'ES'
+      },
+      intro: {
+        lines: ['> booting neural_core', '> linking cloud regions', '> deploying agents', '> system online'],
+        skip: 'click to skip'
+      },
+      sections: { manifesto: 'Manifesto', expertise: 'Services', ecosystem: 'Solutions', stack: 'Powered by', contact: 'Contact' },
+      manifesto: 'I don\'t sell technology. I build systems that *grow businesses:* agents that *answer 24/7,* infrastructure that *scales by itself,* and products your customers *actually use.*',
+      hud: {
+        scroll: 'Scroll to explore',
+        localTime: 'Local time'
       },
       hero: {
         badge: 'AI & DIGITAL TRANSFORMATION STRATEGIST',
@@ -221,7 +242,8 @@ export const content = {
         titleHighlight: 'Business',
         description: 'Ready to implement AI solutions that truly scale? Let\'s take your business to the next level.',
         emailBtn: 'manuelceomx@gmail.com',
-        telegramBtn: '@manuelceomx'
+        telegramBtn: '@manuelceomx',
+        big: 'LET\'S TALK'
       },
       footer: {
         role: 'AI & Digital Transformation Strategy',
@@ -234,6 +256,16 @@ export const content = {
     tech: {
       nav: {
         toggle: 'EN'
+      },
+      intro: {
+        lines: ['> iniciando neural_core', '> enlazando regiones cloud', '> desplegando agentes', '> sistema en línea'],
+        skip: 'clic para saltar'
+      },
+      sections: { manifesto: 'Manifiesto', expertise: 'Expertise', ecosystem: 'Ecosistema', stack: 'Stack', contact: 'Contacto' },
+      manifesto: 'Diseño sistemas que *no se caen.* IA que *conversa como humano,* nube que *escala sola* y código hecho para durar — desde la capa de datos hasta el último pixel.',
+      hud: {
+        scroll: 'Desliza para explorar',
+        localTime: 'Hora local'
       },
       hero: {
         badge: 'ARQUITECTO ENTERPRISE AI & CLOUD',
@@ -336,7 +368,8 @@ export const content = {
         titleHighlight: 'Negocios',
         description: '¿Listo para implementar soluciones de IA que realmente escalen? Llevemos su infraestructura al siguiente nivel.',
         emailBtn: 'manuelceomx@gmail.com',
-        telegramBtn: '@manuelceomx'
+        telegramBtn: '@manuelceomx',
+        big: 'HABLEMOS'
       },
       footer: {
         role: 'Enterprise AI & Cloud Architecture',
@@ -347,6 +380,16 @@ export const content = {
     business: {
       nav: {
         toggle: 'EN'
+      },
+      intro: {
+        lines: ['> iniciando neural_core', '> enlazando regiones cloud', '> desplegando agentes', '> sistema en línea'],
+        skip: 'clic para saltar'
+      },
+      sections: { manifesto: 'Manifiesto', expertise: 'Servicios', ecosystem: 'Soluciones', stack: 'Impulsado por', contact: 'Contacto' },
+      manifesto: 'No vendo tecnología. Construyo sistemas que *hacen crecer negocios:* agentes que *atienden 24/7,* infraestructura que *escala sola* y productos que tus clientes *realmente usan.*',
+      hud: {
+        scroll: 'Desliza para explorar',
+        localTime: 'Hora local'
       },
       hero: {
         badge: 'ESTRATEGA DE IA Y TRANSFORMACIÓN DIGITAL',
@@ -449,7 +492,8 @@ export const content = {
         titleHighlight: 'Negocios',
         description: '¿Listo para implementar soluciones de IA que realmente escalen? Llevemos tu negocio al siguiente nivel.',
         emailBtn: 'manuelceomx@gmail.com',
-        telegramBtn: '@manuelceomx'
+        telegramBtn: '@manuelceomx',
+        big: 'HABLEMOS'
       },
       footer: {
         role: 'Estrategia de IA y Transformación Digital',

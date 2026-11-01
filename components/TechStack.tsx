@@ -1,66 +1,44 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Database, 
-  Globe, 
-  Layout, 
-  Server, 
-  CloudLightning,
-  Code2,
-  Flame,
-  Zap
-} from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { SectionLabel, VelocityMarquee } from './fx/effects';
+
+const ROW_A = ['Next.js', 'React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Supabase', 'Firebase', 'React Native'];
+const ROW_B = ['Gemini', 'GPT-4o', 'ElevenLabs', 'LangChain', 'GCP', 'Azure', 'Cloudflare', 'Docker', 'Kubernetes', 'Terraform'];
+
+const Item: React.FC<{ name: string; outline?: boolean }> = ({ name, outline }) => (
+  <span className="flex items-center shrink-0 px-6 md:px-10 group" data-cursor="hover">
+    <span
+      className={`font-sans font-extrabold uppercase tracking-tight text-[13vw] md:text-[7.5vw] leading-none transition-colors duration-300 ${
+        outline
+          ? 'text-transparent [-webkit-text-stroke:1.5px_rgba(148,163,184,0.5)] group-hover:[-webkit-text-stroke:1.5px_#0DD6E8]'
+          : 'text-white/90 group-hover:text-cyan-400'
+      }`}
+    >
+      {name}
+    </span>
+    <span className="ml-12 md:ml-20 text-cyan-400 text-3xl md:text-5xl">✦</span>
+  </span>
+);
 
 export const TechStack: React.FC = () => {
   const { t } = useLanguage();
-  
-  const technologies = [
-    { name: 'Next.js', icon: Globe, color: 'text-white' },
-    { name: 'React', icon: Layout, color: 'text-cyan-400' },
-    { name: 'TypeScript', icon: Code2, color: 'text-blue-400' },
-    { name: 'PostgreSQL', icon: Database, color: 'text-blue-500' },
-    { name: 'Supabase', icon: Zap, color: 'text-emerald-400' },
-    { name: 'Firebase', icon: Flame, color: 'text-orange-500' },
-    { name: 'Node.js', icon: Server, color: 'text-green-500' },
-    { name: 'Azure', icon: CloudLightning, color: 'text-blue-300' },
-  ];
-  
   return (
-    <section className="w-full py-20 border-y border-white/5 bg-navy-950/50 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto px-4">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h3 className="text-xl font-mono text-slate-400 uppercase tracking-widest">{t.stack.title}</h3>
-        </motion.div>
-        
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-          {technologies.map((tech, index) => (
-            <motion.div
-              key={tech.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group flex flex-col items-center gap-3 cursor-pointer"
-            >
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/5 group-hover:border-white/20 transition-all duration-300 group-hover:bg-white/10 group-hover:scale-110">
-                <tech.icon 
-                  size={32} 
-                  className={`text-slate-400 transition-colors duration-300 group-hover:${tech.color.replace('text-', '') === 'white' ? 'text-white' : tech.color}`} 
-                  style={{ color: undefined }}
-                />
-              </div>
-              <span className="text-sm font-medium text-slate-500 group-hover:text-slate-200 transition-colors">
-                {tech.name}
-              </span>
-            </motion.div>
+    <section id="stack" className="relative w-full py-24 md:py-36 border-y border-white/5 bg-[#000a14]/70 backdrop-blur-sm overflow-hidden">
+      <div className="px-5 md:px-12 mb-12 md:mb-16 max-w-[1400px] mx-auto flex items-end justify-between gap-6">
+        <SectionLabel index="03" label={t.sections.stack} />
+        <h3 className="hidden md:block font-tech text-sm text-slate-500 uppercase tracking-[0.3em]">{t.stack.title}</h3>
+      </div>
+      <div className="space-y-2 md:space-y-4 -rotate-2 scale-105">
+        <VelocityMarquee baseVelocity={-2.5}>
+          {ROW_A.map((n) => (
+            <Item key={n} name={n} />
           ))}
-        </div>
+        </VelocityMarquee>
+        <VelocityMarquee baseVelocity={2.5}>
+          {ROW_B.map((n) => (
+            <Item key={n} name={n} outline />
+          ))}
+        </VelocityMarquee>
       </div>
     </section>
   );
