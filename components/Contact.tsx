@@ -9,10 +9,13 @@ export const Contact: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
   // The giant word zooms and un-tracks into place as the section arrives
-  const scale = useTransform(scrollYProgress, [0, 0.75], [0.55, 1]);
-  const spacing = useTransform(scrollYProgress, [0, 0.75], ['0.4em', '-0.04em']);
+  const scale = useTransform(scrollYProgress, [0, 0.85], [0.55, 1]);
+  const spacing = useTransform(scrollYProgress, [0, 0.85], ['0.4em', '-0.04em']);
   const opacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
   const ringRotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
+
+  // Fit the headline to the viewport whatever its length (HABLEMOS vs LET'S TALK)
+  const fitVw = Math.min(15, 86 / (t.contact.big.length * 0.66));
 
   const channels = [
     { href: `mailto:${t.contact.emailBtn}`, label: t.contact.emailBtn, Icon: Mail, kind: 'Email', external: false },
@@ -21,7 +24,7 @@ export const Contact: React.FC = () => {
   ];
 
   return (
-    <section ref={ref} id="contact" className="relative w-full px-5 md:px-12 pt-32 md:pt-48 pb-16 overflow-hidden">
+    <section ref={ref} id="contact" className="relative w-full px-6 md:px-12 pt-40 md:pt-56 pb-16 overflow-hidden">
       {/* Rotating ring behind the headline */}
       <motion.div
         style={{ rotate: ringRotate }}
@@ -32,11 +35,11 @@ export const Contact: React.FC = () => {
         <SectionLabel index="04" label={t.sections.contact} className="mb-10 justify-center" />
 
         <motion.h2
-          style={{ scale, letterSpacing: spacing, opacity }}
-          className="text-center font-sans font-extrabold uppercase leading-[0.85] text-[18vw] md:text-[15vw] text-white origin-bottom whitespace-nowrap"
+          style={{ scale, letterSpacing: spacing, opacity, fontSize: `${fitVw}vw` }}
+          className="text-center font-sans font-extrabold uppercase leading-[0.85] text-white origin-bottom whitespace-nowrap"
         >
           {t.contact.big.split(' ').map((w, i) => (
-            <span key={i} className={i % 2 ? 'text-transparent [-webkit-text-stroke:2px_#0DD6E8]' : ''}>
+            <span key={i} className={i % 2 ? 'text-cyan-400' : ''}>
               {w}{' '}
             </span>
           ))}
@@ -46,8 +49,8 @@ export const Contact: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mt-10 text-center text-lg md:text-2xl text-slate-300 max-w-2xl mx-auto font-light"
+          transition={{ duration: 1.1, delay: 0.2 }}
+          className="mt-12 text-center text-lg md:text-2xl text-slate-300 max-w-2xl mx-auto font-light"
         >
           {t.contact.description}
         </motion.p>
@@ -62,7 +65,7 @@ export const Contact: React.FC = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ delay: i * 0.15, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
               className="group relative flex items-center justify-between gap-4 py-8 md:py-12 md:px-8 border-b md:border-b-0 md:border-r last:border-r-0 border-white/10 overflow-hidden"
             >
               <span className="absolute inset-0 bg-cyan-400 origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />

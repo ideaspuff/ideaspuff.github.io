@@ -24,8 +24,8 @@ const SpotlightCard: React.FC<{
       ref={ref}
       initial={{ opacity: 0, y: 80, rotateX: 18, clipPath: 'inset(30% 0% 0% 0% round 28px)' }}
       whileInView={{ opacity: 1, y: 0, rotateX: 0, clipPath: 'inset(0% 0% 0% 0% round 28px)' }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.12 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.18 }}
       style={{ rotateX: rx, rotateY: ry, transformPerspective: 1200 }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
@@ -73,7 +73,7 @@ export const TechnicalEcosystem: React.FC = () => {
   const titleX = useTransform(scrollYProgress, [0, 1], ['8%', '-8%']);
 
   return (
-    <section id="ecosystem" className="relative w-full px-5 md:px-12 py-32 md:py-44">
+    <section id="ecosystem" className="relative w-full px-6 md:px-12 py-36 md:py-48">
       <div className="max-w-[1400px] mx-auto">
         <div ref={headRef} className="mb-16 md:mb-24 grid md:grid-cols-[1.2fr_1fr] gap-10 items-end">
           <div>
@@ -90,14 +90,14 @@ export const TechnicalEcosystem: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.2 }}
+            transition={{ duration: 1.2, delay: 0.3 }}
             className="text-slate-400 text-lg md:text-xl leading-relaxed"
           >
             {t.ecosystem.description}
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-5 auto-rows-[minmax(260px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6 auto-rows-[minmax(240px,auto)]">
           <SpotlightCard index={0} color="251,146,60" className="md:col-span-2 md:row-span-2">
             <IconBox Icon={Database} className="bg-orange-500/10 border-orange-500/30 text-orange-400" />
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{c.database.title}</h3>

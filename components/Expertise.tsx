@@ -6,10 +6,13 @@ import { SectionLabel } from './fx/effects';
 
 type CardKey = 'ai' | 'cloud' | 'dev';
 
+/** Vertical scroll px per horizontal px. >1 makes the sideways travel calmer. */
+const RUNWAY = 1.8;
+
 const CARDS: { key: CardKey; Icon: typeof Bot; accent: string; glow: string; stroke: string }[] = [
-  { key: 'ai', Icon: Bot, accent: 'text-cyan-400', glow: 'from-cyan-500/30', stroke: 'rgba(13,214,232,0.55)' },
-  { key: 'cloud', Icon: Cloud, accent: 'text-blue-400', glow: 'from-blue-500/30', stroke: 'rgba(96,165,250,0.55)' },
-  { key: 'dev', Icon: Code2, accent: 'text-violet-400', glow: 'from-violet-500/30', stroke: 'rgba(167,139,250,0.55)' },
+  { key: 'ai', Icon: Bot, accent: 'text-cyan-400', glow: 'from-cyan-500/30', stroke: 'rgba(13,214,232,0.22)' },
+  { key: 'cloud', Icon: Cloud, accent: 'text-blue-400', glow: 'from-blue-500/30', stroke: 'rgba(96,165,250,0.22)' },
+  { key: 'dev', Icon: Code2, accent: 'text-violet-400', glow: 'from-violet-500/30', stroke: 'rgba(167,139,250,0.22)' },
 ];
 
 const Panel: React.FC<{
@@ -23,12 +26,12 @@ const Panel: React.FC<{
   // Each panel's number drifts against the scroll for parallax depth
   const seg = 1 / total;
   const numX = useTransform(progress, [seg * index - seg, seg * index + seg], ['30%', '-30%']);
-  const rotate = useTransform(progress, [seg * index - seg, seg * index, seg * index + seg], [6, 0, -6]);
+  const rotate = useTransform(progress, [seg * index - seg, seg * index, seg * index + seg], [4, 0, -4]);
 
   return (
     <motion.article
       style={{ rotate }}
-      className="group relative shrink-0 w-[86vw] md:w-[58vw] lg:w-[46vw] h-[68vh] md:h-[70vh] rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.01] backdrop-blur-xl overflow-hidden p-7 md:p-12 flex flex-col"
+      className="group relative shrink-0 w-[84vw] md:w-[58vw] lg:w-[46vw] h-[66vh] md:h-[70vh] rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.01] backdrop-blur-xl overflow-hidden p-7 md:p-12 flex flex-col"
     >
       <div className={`absolute -top-1/3 -right-1/4 w-[80%] h-[80%] rounded-full bg-gradient-to-br ${card.glow} to-transparent blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700`} />
 
@@ -84,7 +87,7 @@ export const Expertise: React.FC = () => {
   }, []);
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
-  const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.4 });
+  const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 28, mass: 0.5 });
   const x = useTransform(smooth, [0, 1], [0, -distance]);
   const barScale = useTransform(smooth, [0, 1], [0, 1]);
 
@@ -94,12 +97,12 @@ export const Expertise: React.FC = () => {
       id="expertise"
       className="relative w-full"
       // Vertical runway for the horizontal travel
-      style={{ height: `calc(100vh + ${distance}px)` }}
+      style={{ height: `calc(100vh + ${Math.round(distance * RUNWAY)}px)` }}
     >
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-        <motion.div ref={trackRef} style={{ x }} className="flex items-center gap-6 md:gap-10 pl-5 md:pl-12 pr-[10vw] will-change-transform">
+        <motion.div ref={trackRef} style={{ x }} className="flex items-center gap-8 md:gap-12 pl-6 md:pl-12 pr-[10vw] will-change-transform">
           {/* Intro panel */}
-          <div className="shrink-0 w-[86vw] md:w-[38vw] pr-4">
+          <div className="shrink-0 w-[84vw] md:w-[38vw] pr-4">
             <SectionLabel index="01" label={t.sections.expertise} className="mb-8" />
             <h2 className="font-sans font-extrabold uppercase text-white leading-[0.9] tracking-tight text-[13vw] md:text-[6.5vw]">
               {t.expertise.title}
@@ -117,7 +120,7 @@ export const Expertise: React.FC = () => {
         </motion.div>
 
         {/* Progress rail */}
-        <div className="absolute bottom-8 left-5 right-5 md:left-12 md:right-12 h-px bg-white/10">
+        <div className="absolute bottom-8 left-6 right-6 md:left-12 md:right-12 h-px bg-white/10">
           <motion.div style={{ scaleX: barScale }} className="h-full origin-left bg-cyan-400" />
         </div>
       </div>

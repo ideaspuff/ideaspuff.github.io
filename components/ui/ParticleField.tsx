@@ -194,7 +194,7 @@ const Field: React.FC<{ count: number }> = ({ count }) => {
     u.uMorph.value = morph.current;
 
     // Step back behind dense content so text stays legible; full strength in hero & contact
-    const dimTarget = prog < 0.04 ? 1 : prog > 0.9 ? 0.85 : 0.45;
+    const dimTarget = prog < 0.04 ? 1 : prog > 0.9 ? 0.6 : 0.45;
     u.uDim.value += (dimTarget - u.uDim.value) * Math.min(1, dt * 2.5);
 
     // Cursor (lerped so the "wake" feels fluid)

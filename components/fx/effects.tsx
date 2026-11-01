@@ -18,7 +18,7 @@ import { prefersReducedMotion } from '../../context/IntroContext';
 export const useSmoothScroll = () => {
   useEffect(() => {
     if (prefersReducedMotion()) return;
-    const lenis = new Lenis({ duration: 1.25, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    const lenis = new Lenis({ duration: 1.4, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
     let raf = 0;
     const loop = (time: number) => {
       lenis.raf(time);
@@ -122,7 +122,7 @@ export const SplitLetters: React.FC<{
         className={`inline-block ${letterClassName}`}
         initial={{ y: '110%', rotate: 8 }}
         animate={show ? { y: '0%', rotate: 0 } : { y: '110%', rotate: 8 }}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: delay + i * 0.045 }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: delay + i * 0.06 }}
       >
         {ch === ' ' ? ' ' : ch}
       </motion.span>
@@ -338,14 +338,14 @@ export const SectionLabel: React.FC<{ index: string; label: string; className?: 
     className={`flex items-center gap-4 font-tech text-xs md:text-sm tracking-[0.3em] uppercase text-cyan-400/80 ${className ?? ''}`}
     initial="hidden"
     whileInView="show"
-    viewport={{ once: true, margin: '-80px' }}
+    viewport={{ once: true, margin: '-120px' }}
   >
     <span>{index}</span>
     <motion.span
       className="h-px w-16 bg-cyan-400/60 origin-left"
-      variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } } }}
+      variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } } }}
     />
-    <motion.span variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0, transition: { delay: 0.3 } } }}>
+    <motion.span variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0, transition: { delay: 0.4, duration: 0.8 } } }}>
       {label}
     </motion.span>
   </motion.div>

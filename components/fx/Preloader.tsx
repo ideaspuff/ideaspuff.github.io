@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useIntro, prefersReducedMotion } from '../../context/IntroContext';
 import { useLanguage } from '../../context/LanguageContext';
 
-const DURATION = 2200; // ms for the counter to reach 100
+const DURATION = 2600; // ms for the counter to reach 100
 
 export const Preloader: React.FC = () => {
   const { introDone, finishIntro } = useIntro();
@@ -49,12 +49,12 @@ export const Preloader: React.FC = () => {
           <motion.div
             className="absolute inset-x-0 top-0 h-1/2 bg-[#000a14] border-b border-cyan-400/40"
             exit={{ y: '-100%' }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
+            transition={{ duration: 1.3, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
           />
           <motion.div
             className="absolute inset-x-0 bottom-0 h-1/2 bg-[#000a14] border-t border-cyan-400/40"
             exit={{ y: '100%' }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
+            transition={{ duration: 1.3, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
           />
 
           <motion.div

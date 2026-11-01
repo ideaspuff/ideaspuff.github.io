@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Briefcase, Code2 } from 'lucide-react';
@@ -18,6 +18,13 @@ const TopBar = () => {
   const { language, viewMode, toggleLanguage, toggleViewMode, t } = useLanguage();
   const { introDone } = useIntro();
   const isBusiness = viewMode === 'business';
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const modeLabel = isBusiness
     ? language === 'es' ? 'Modo Negocios' : 'Business Mode'
@@ -37,7 +44,9 @@ const TopBar = () => {
       initial={{ opacity: 0, y: -30 }}
       animate={introDone ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 inset-x-0 z-50 px-5 md:px-12 py-5 flex items-center justify-between"
+      className={`fixed top-0 inset-x-0 z-50 px-6 md:px-12 flex items-center justify-between transition-[background-color,padding,backdrop-filter] duration-500 ${
+        scrolled ? 'py-3 bg-[#000c1a]/75 backdrop-blur-xl border-b border-white/5' : 'py-5'
+      }`}
     >
       <a href="#top" className="font-sans font-extrabold text-xl tracking-tight text-white" aria-label="Inicio">
         MC<span className="text-cyan-400">.</span>

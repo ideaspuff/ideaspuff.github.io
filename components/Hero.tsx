@@ -34,7 +34,7 @@ export const Hero: React.FC = () => {
   useEffect(() => setPhraseIdx(0), [phrases]);
   useEffect(() => {
     if (!introDone) return;
-    const id = setInterval(() => setPhraseIdx((i) => (i + 1) % phrases.length), 4200);
+    const id = setInterval(() => setPhraseIdx((i) => (i + 1) % phrases.length), 5000);
     return () => clearInterval(id);
   }, [introDone, phrases]);
 
@@ -50,14 +50,14 @@ export const Hero: React.FC = () => {
   const appear = (delay: number) => ({
     initial: { opacity: 0, y: 24 },
     animate: introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay },
+    transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], delay },
   });
 
   return (
-    <section ref={ref} id="top" className="relative w-full min-h-[100svh] flex flex-col justify-center px-5 md:px-12 pt-28 pb-24 overflow-hidden">
+    <section ref={ref} id="top" className="relative w-full min-h-[100svh] flex flex-col justify-center px-6 md:px-12 pt-32 pb-32 md:pb-28 overflow-hidden">
       <motion.div style={{ opacity, filter: blur, scale }} className="relative z-10 w-full max-w-[1500px] mx-auto">
         {/* Badge */}
-        <motion.div {...appear(0.1)} className="mb-6 md:mb-10 font-tech text-[11px] md:text-sm tracking-[0.18em] md:tracking-[0.35em] text-cyan-400 uppercase flex items-center gap-3">
+        <motion.div {...appear(0.1)} className="mb-8 md:mb-10 font-tech text-[11px] md:text-sm tracking-[0.18em] md:tracking-[0.35em] text-cyan-400 uppercase flex items-center gap-3">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
@@ -74,20 +74,20 @@ export const Hero: React.FC = () => {
             <SplitLetters
               text="Castellanos"
               show={introDone}
-              delay={0.35}
-              letterClassName="text-transparent [-webkit-text-stroke:1.5px_rgba(13,214,232,0.9)] md:[-webkit-text-stroke:2px_rgba(13,214,232,0.9)]"
+              delay={0.5}
+              letterClassName="text-white"
             />
           </motion.span>
         </h1>
 
         {/* Decoding phrase */}
-        <motion.div {...appear(1.0)} className="mt-8 md:mt-12 grid md:grid-cols-[1fr_auto] gap-8 md:gap-16 items-end">
+        <motion.div {...appear(1.4)} className="mt-12 md:mt-14 grid md:grid-cols-[1fr_auto] gap-8 md:gap-16 items-end">
           <p className="text-xl md:text-3xl text-slate-200 font-light leading-snug [text-shadow:0_2px_24px_rgba(0,12,26,0.95)] max-w-3xl min-h-[3.4em] md:min-h-[2.6em]">
             <span className="text-cyan-400 font-tech mr-3">&gt;</span>
             <ScrambleText text={phrases[phraseIdx]} start={introDone} speed={1.4} />
           </p>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-5">
             <Magnetic>
               <a
                 href="https://wa.me/5215569111742"
@@ -102,6 +102,7 @@ export const Hero: React.FC = () => {
                 </span>
               </a>
             </Magnetic>
+            <div className="flex items-center gap-3">
             {[
               { href: 'https://linkedin.com/in/manuelceomx', Icon: Linkedin, label: 'LinkedIn' },
               { href: 'https://github.com/ideaspuff', Icon: Github, label: 'GitHub' },
@@ -119,17 +120,18 @@ export const Hero: React.FC = () => {
                 </a>
               </Magnetic>
             ))}
+            </div>
           </div>
         </motion.div>
 
         {/* Chips */}
-        <motion.div {...appear(1.2)} className="mt-10 flex flex-wrap gap-3">
+        <motion.div {...appear(1.7)} className="mt-10 md:mt-12 flex flex-wrap gap-2.5 md:gap-3">
           {t.hero.chips.map((chip, i) => (
             <motion.span
               key={chip}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={introDone ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 1.3 + i * 0.08, type: 'spring', stiffness: 260, damping: 18 }}
+              transition={{ delay: 1.8 + i * 0.12, type: 'spring', stiffness: 260, damping: 18 }}
               className="px-4 py-1.5 rounded-full text-xs md:text-sm border border-white/10 bg-white/[0.04] text-slate-300 font-mono backdrop-blur"
             >
               {chip}
@@ -139,20 +141,20 @@ export const Hero: React.FC = () => {
       </motion.div>
 
       {/* HUD corners */}
-      <motion.div style={{ opacity: hudOpacity }} className="absolute bottom-6 inset-x-5 md:inset-x-12 z-10 flex justify-between items-end font-tech text-[10px] md:text-xs tracking-[0.25em] uppercase text-slate-500">
-        <motion.div {...appear(1.5)} className="hidden md:block">
+      <motion.div style={{ opacity: hudOpacity }} className="absolute bottom-6 inset-x-6 md:inset-x-12 z-10 flex justify-between items-end font-tech text-[10px] md:text-xs tracking-[0.25em] uppercase text-slate-500">
+        <motion.div {...appear(2.0)} className="hidden md:block">
           <p>CDMX · MX</p>
           <p className="text-slate-400">
             {t.hud.localTime} <span className="text-cyan-400 tabular-nums">{time}</span>
           </p>
         </motion.div>
-        <motion.a {...appear(1.6)} href="#manifesto" className="flex flex-col items-center gap-3 mx-auto md:mx-0 md:absolute md:left-1/2 md:-translate-x-1/2 text-slate-400 hover:text-cyan-400 transition-colors">
+        <motion.a {...appear(2.2)} href="#manifesto" className="flex flex-col items-center gap-3 mx-auto md:mx-0 md:absolute md:left-1/2 md:-translate-x-1/2 text-slate-400 hover:text-cyan-400 transition-colors">
           <span>{t.hud.scroll}</span>
           <span className="relative block w-px h-14 bg-white/10 overflow-hidden">
             <span className="absolute inset-x-0 top-0 h-1/2 bg-cyan-400 animate-[scrollcue_1.8s_cubic-bezier(0.76,0,0.24,1)_infinite]" />
           </span>
         </motion.a>
-        <motion.div {...appear(1.5)} className="hidden md:block text-right">
+        <motion.div {...appear(2.0)} className="hidden md:block text-right">
           <p>N 19.43° / W 99.13°</p>
           <p className="text-slate-400">© {new Date().getFullYear()}</p>
         </motion.div>
