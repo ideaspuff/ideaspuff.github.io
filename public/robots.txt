@@ -1,0 +1,5 @@
+# https://www.manuelcastellanos.com.mx
+User-agent: *
+Allow: /
+
+Sitemap: https://www.manuelcastellanos.com.mx/sitemap.xml

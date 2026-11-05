@@ -70,6 +70,8 @@ export const Hero: React.FC = () => {
           <motion.span style={{ x: xLeft }} className="block text-white text-[16vw] md:text-[11.5vw]">
             <SplitLetters text="Manuel" show={introDone} delay={0.15} />
           </motion.span>
+          {/* Real space so crawlers read "Manuel Castellanos", not "ManuelCastellanos" */}
+          {' '}
           <motion.span style={{ x: xRight }} className="block text-[11.6vw] md:text-[11.5vw] md:text-right">
             <SplitLetters
               text="Castellanos"

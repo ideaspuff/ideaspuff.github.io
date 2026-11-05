@@ -1,0 +1,15 @@
+{
+  "name": "Manuel Castellanos",
+  "short_name": "MC.",
+  "description": "IA y transformación digital: agentes de voz y chat, automatización, arquitectura cloud y software a la medida.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000c1a",
+  "theme_color": "#000c1a",
+  "lang": "es-MX",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -407,3 +407,21 @@ export const content = {
     }
   }
 };
+
+/** Search/social metadata per language. index.html ships the Spanish version statically. */
+export const SITE_URL = 'https://www.manuelcastellanos.com.mx';
+
+export const seo = {
+  es: {
+    title: 'Manuel Castellanos | Arquitecto de IA y Cloud · Transformación Digital',
+    description:
+      'Ayudo a empresas a vender más y operar mejor con inteligencia artificial: agentes de voz y chat 24/7, automatización, arquitectura cloud y software a la medida.',
+    locale: 'es_MX'
+  },
+  en: {
+    title: 'Manuel Castellanos | AI & Cloud Architect · Digital Transformation',
+    description:
+      'I help companies sell more and run better with AI: 24/7 voice and chat agents, automation, cloud architecture and custom software.',
+    locale: 'en_US'
+  }
+};
