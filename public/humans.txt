@@ -1,0 +1,11 @@
+/* TEAM */
+Diseño, desarrollo y arquitectura: Manuel Castellanos
+Contacto: manuelceomx [at] gmail.com
+LinkedIn: https://linkedin.com/in/manuelceomx
+GitHub: https://github.com/ideaspuff
+Ubicación: México
+
+/* SITE */
+Idiomas: Español, English
+Stack: React, TypeScript, Vite, Three.js, Framer Motion, Lenis, Tailwind CSS
+Hosting: Vercel

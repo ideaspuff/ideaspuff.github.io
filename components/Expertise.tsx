@@ -9,10 +9,10 @@ type CardKey = 'ai' | 'cloud' | 'dev';
 /** Vertical scroll px per horizontal px. >1 makes the sideways travel calmer. */
 const RUNWAY = 1.8;
 
-const CARDS: { key: CardKey; Icon: typeof Bot; accent: string; glow: string; stroke: string }[] = [
-  { key: 'ai', Icon: Bot, accent: 'text-cyan-400', glow: 'from-cyan-500/30', stroke: 'rgba(13,214,232,0.22)' },
-  { key: 'cloud', Icon: Cloud, accent: 'text-blue-400', glow: 'from-blue-500/30', stroke: 'rgba(96,165,250,0.22)' },
-  { key: 'dev', Icon: Code2, accent: 'text-violet-400', glow: 'from-violet-500/30', stroke: 'rgba(167,139,250,0.22)' },
+const CARDS: { key: CardKey; Icon: typeof Bot; accent: string; glow: string; stroke: string; href: string }[] = [
+  { key: 'ai', Icon: Bot, accent: 'text-cyan-400', glow: 'from-cyan-500/30', stroke: 'rgba(13,214,232,0.22)', href: '/servicios/agentes-de-ia/' },
+  { key: 'cloud', Icon: Cloud, accent: 'text-blue-400', glow: 'from-blue-500/30', stroke: 'rgba(96,165,250,0.22)', href: '/servicios/arquitectura-cloud/' },
+  { key: 'dev', Icon: Code2, accent: 'text-violet-400', glow: 'from-violet-500/30', stroke: 'rgba(167,139,250,0.22)', href: '/servicios/software-a-la-medida/' },
 ];
 
 const Panel: React.FC<{
@@ -46,7 +46,9 @@ const Panel: React.FC<{
         <div className={`grid place-items-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 ${card.accent}`}>
           <card.Icon size={30} />
         </div>
-        <ArrowUpRight className={`${card.accent} opacity-40 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500`} size={32} />
+        <a href={card.href} aria-label={data.title} className="p-2 -m-2">
+          <ArrowUpRight className={`${card.accent} opacity-40 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500`} size={32} />
+        </a>
       </div>
 
       <h3 className="relative z-10 mt-auto md:mt-14 text-3xl md:text-5xl font-bold text-white leading-tight max-w-[14ch]">{data.title}</h3>

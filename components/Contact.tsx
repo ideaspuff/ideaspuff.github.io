@@ -4,6 +4,14 @@ import { Mail, Send, ArrowUpRight, MessageCircle, Linkedin, Github, Youtube } fr
 import { useLanguage } from '../context/LanguageContext';
 import { Magnetic, SectionLabel, REVEAL_VIEWPORT, isNarrow } from './fx/effects';
 
+// Static, crawlable service pages (generated at build time, Spanish)
+const SERVICE_LINKS = [
+  { href: '/servicios/agentes-de-ia/', label: 'Agentes de IA' },
+  { href: '/servicios/automatizacion-con-ia/', label: 'Automatización con IA' },
+  { href: '/servicios/arquitectura-cloud/', label: 'Arquitectura cloud' },
+  { href: '/servicios/software-a-la-medida/', label: 'Software a la medida' },
+];
+
 export const Contact: React.FC = () => {
   const { t } = useLanguage();
   const ref = useRef<HTMLElement>(null);
@@ -81,7 +89,15 @@ export const Contact: React.FC = () => {
           ))}
         </div>
 
-        <footer className="mt-24 flex flex-col md:flex-row items-center justify-between gap-8 text-sm text-slate-500">
+        <nav aria-label="Servicios" className="mt-24 flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-3 font-tech text-xs tracking-[0.2em] uppercase text-slate-400">
+          {SERVICE_LINKS.map((s) => (
+            <a key={s.href} href={s.href} className="hover:text-cyan-400 transition-colors">
+              {s.label}
+            </a>
+          ))}
+        </nav>
+
+        <footer className="mt-12 flex flex-col md:flex-row items-center justify-between gap-8 text-sm text-slate-500">
           <div className="text-center md:text-left">
             <p>© {new Date().getFullYear()} Manuel Castellanos. {t.footer.rights}</p>
             <p className="mt-1 text-xs text-slate-600">{t.footer.role} · {t.footer.extra}</p>

@@ -7,6 +7,7 @@
  * React replaces it on mount, so humans never see it and both stay in sync.
  */
 import { content, seo, SITE_URL } from '../constants';
+import { services } from './services';
 
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -50,6 +51,7 @@ export function renderStaticContent(): string {
       <a href="#servicios">${esc(b.sections.expertise)}</a> ·
       <a href="#soluciones">${esc(b.sections.ecosystem)}</a> ·
       <a href="#contacto">${esc(b.sections.contact)}</a> ·
+      <a href="/servicios/">Todos los servicios</a> ·
       <a href="${SITE_URL}/?lang=en" hreflang="en">English</a>
     </nav>
   </header>
@@ -59,6 +61,7 @@ export function renderStaticContent(): string {
       <h2>${esc(b.expertise.title)} ${esc(b.expertise.titleHighlight)}</h2>
       <p>${esc(b.expertise.description)}</p>
       ${expCards(b.expertise)}
+      <ul>${services.map((s) => `<li><a href="/servicios/${s.slug}/">${esc(s.name)}</a>: ${esc(s.short)}</li>`).join('')}</ul>
     </section>
     <section>
       <h2>${esc(t.expertise.title)} ${esc(t.expertise.titleHighlight)}</h2>
